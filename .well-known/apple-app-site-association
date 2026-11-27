@@ -1,0 +1,21 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "Y6V66QBZ8J.com.jenpreisser.gtfoob"
+        ],
+        "components": [
+          {
+            "/": "/join.html",
+            "comment": "GET UP!-Einladung — oeffnet die App bei den Freunden, Code steht schon drin"
+          },
+          {
+            "/": "/join",
+            "comment": "Gleicher Link ohne Dateiendung"
+          }
+        ]
+      }
+    ]
+  }
+}
