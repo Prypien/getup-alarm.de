@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://getup-alarm.de/partner</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://getup-alarm.de/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
