@@ -7,6 +7,7 @@ Ausgeliefert über GitHub Pages aus `main`, Domain über die Datei `CNAME`.
 | --- | --- |
 | `index.html` | Landingpage mit Links in den App Store und zu Google Play |
 | `privacy.html`, `delete.html`, `impressum.html` | Rechtsseiten, in den Stores und bei Meta verlinkt |
+| `partner.html` | Creator-Programm (`/partner`) mit Bewerbungsformular, Versand über FormSubmit an `team@getup-alarm.de`; verlinkt in Menü, Fußzeile und Hinweis auf der Startseite |
 | `join.html` | Einladungslink (`/join.html#CODE`), öffnet die App oder zeigt den Code |
 | `404.html` | Seite für unbekannte Adressen |
 | `.well-known/` | App-Verknüpfung für iOS (`apple-app-site-association`) und Android (`assetlinks.json`) |
