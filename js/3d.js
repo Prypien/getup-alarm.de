@@ -59,23 +59,19 @@
     els.forEach(function (el) { io.observe(el); });
   } else els.forEach(function (el) { el.classList.add('in'); });
 
-  /* Karussell: dreht sich langsam, lässt sich ziehen */
-  var car = document.getElementById('carousel'), ring = document.getElementById('ring');
-  if (!car) return;
-  var a = 0, v = reduce ? 0 : -.12, drag = null, last = 0, vis = true;
-  new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe(car);
-  car.addEventListener('pointerdown', function (e) { drag = e.clientX; last = e.clientX; car.setPointerCapture(e.pointerId); });
-  car.addEventListener('pointermove', function (e) {
-    if (drag === null) return;
-    var dx = e.clientX - last; last = e.clientX; a += dx * .35; v = dx * .35;
+  /* Aufgaben-Auswahl: das Handy zeigt die gewählte Aufgabe */
+  var dev = document.getElementById('taskDev'), img = document.getElementById('taskImg');
+  if (!dev) return;
+  var picks = [].slice.call(document.querySelectorAll('.pick'));
+  picks.forEach(function (b) { var i = new Image(); i.src = b.dataset.img; });
+  picks.forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (b.classList.contains('on')) return;
+      picks.forEach(function (o) { o.classList.toggle('on', o === b); o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      dev.classList.remove('swap'); void dev.offsetWidth; dev.classList.add('swap');
+      setTimeout(function () { img.src = b.dataset.img; img.alt = b.dataset.alt; }, reduce ? 0 : 190);
+    });
   });
-  function end() { drag = null; }
-  car.addEventListener('pointerup', end); car.addEventListener('pointercancel', end);
-  (function spinRing() {
-    if (vis && drag === null) { a += v; v += ((reduce ? 0 : -.12) - v) * .03; }
-    ring.style.setProperty('--a', a.toFixed(2) + 'deg');
-    requestAnimationFrame(spinRing);
-  })();
 })();
 
 /* Creator-Stufen: neigen sich unter der Maus */

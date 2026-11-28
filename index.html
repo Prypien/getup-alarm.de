@@ -117,25 +117,24 @@
       <div class="split">
         <div>
           <h2 class="pop"><span class="lg">31 Aufgaben</span><span class="sm">statt Snooze.</span></h2>
-          <p class="lede">Für den Kopf, für die Beine oder mit Beweisfoto. Je länger deine Streak, desto schwerer werden sie.</p>
+          <p class="lede">Für den Kopf, für die Beine oder mit Beweisfoto. Je länger deine Streak, desto schwerer werden sie. Tipp eine an:</p>
+          <div class="picker" role="group" aria-label="Aufgabe auswählen">
+            <button type="button" class="pick on" data-img="img/app-rechnen.webp" data-alt="Aufgabe Rechnen: 4 mal 3 plus 12, darunter ein Ziffernblock" aria-pressed="true">Rechnen</button>
+            <button type="button" class="pick" data-img="img/app-bombe.webp" data-alt="Aufgabe Bombe entschärfen: drei Kabel durchschneiden" aria-pressed="false">Bombe entschärfen</button>
+            <button type="button" class="pick" data-img="img/app-simon.webp" data-alt="Aufgabe Simon sagt mit vier farbigen Feldern" aria-pressed="false">Simon sagt</button>
+            <button type="button" class="pick" data-img="img/app-memory.webp" data-alt="Aufgabe Memory mit verdeckten Karten" aria-pressed="false">Memory</button>
+            <button type="button" class="pick" data-img="img/app-kniebeugen.webp" data-alt="Aufgabe Kniebeugen: Die Kamera zählt mit" aria-pressed="false">Kniebeugen</button>
+            <button type="button" class="pick" data-img="img/app-gras.webp" data-alt="Aufgabe Touch Grass: Gras fotografieren" aria-pressed="false">Touch Grass</button>
+          </div>
+          <p class="more">Außerdem: Flaggen-Quiz, Hampelmänner, Liegestütze, Tanzen, Bett fotografieren, Barcode und Zufall.</p>
         </div>
-        <ul class="chips" aria-label="Beispiele für Aufgaben">
-          <li>Rechnen</li><li>Bombe entschärfen</li><li>Simon sagt</li><li>Memory</li><li>Flaggen-Quiz</li><li>Kniebeugen</li>
-          <li>Hampelmänner</li><li>Liegestütze</li><li>Tanzen</li><li>Bett fotografieren</li><li>Touch Grass</li><li>Zufall</li>
-        </ul>
-      </div>
-      <div class="carousel" id="carousel" aria-label="Sechs Aufgaben aus der App im Karussell">
-        <div class="floor" aria-hidden="true"></div>
-        <div class="ring" id="ring">
-          <div class="slot" style="--k: 0"><div class="dev"><div class="face"><img src="img/app-bombe.webp" alt="Bombe entschärfen" loading="lazy"></div></div><span class="label">Bombe entschärfen</span></div>
-          <div class="slot" style="--k: 1"><div class="dev"><div class="face"><img src="img/app-simon.webp" alt="Simon sagt" loading="lazy"></div></div><span class="label">Simon sagt</span></div>
-          <div class="slot" style="--k: 2"><div class="dev"><div class="face"><img src="img/app-kniebeugen.webp" alt="Kniebeugen vor der Kamera" loading="lazy"></div></div><span class="label">Kniebeugen</span></div>
-          <div class="slot" style="--k: 3"><div class="dev"><div class="face"><img src="img/app-memory.webp" alt="Memory" loading="lazy"></div></div><span class="label">Memory</span></div>
-          <div class="slot" style="--k: 4"><div class="dev"><div class="face"><img src="img/app-gras.webp" alt="Touch Grass: Gras fotografieren" loading="lazy"></div></div><span class="label">Touch Grass</span></div>
-          <div class="slot" style="--k: 5"><div class="dev"><div class="face"><img src="img/app-rechnen.webp" alt="Rechnen" loading="lazy"></div></div><span class="label">Rechnen</span></div>
+        <div class="stage">
+          <div class="burst" style="--burst: var(--yellow)" aria-hidden="true"><i></i></div>
+          <div class="dev" id="taskDev" style="--ry: 14deg; --rz: -3deg">
+            <div class="face"><img id="taskImg" src="img/app-rechnen.webp" alt="Aufgabe Rechnen: 4 mal 3 plus 12, darunter ein Ziffernblock" width="600" height="1304" loading="lazy"></div>
+          </div>
         </div>
       </div>
-      <p class="drag">← Zum Drehen ziehen →</p>
       <div class="tiles">
         <div class="card3 rv"><h3>Für den Kopf</h3><p>Rechnen, Bombe entschärfen, Simon sagt, Memory, Flaggen-Quiz oder einen Satz nachsprechen.</p></div>
         <div class="card3 rv"><h3>Zum Aufstehen</h3><p>Kniebeugen, Hampelmänner, Liegestütze oder Tanzen. Die Kamera zählt mit, ausgewertet wird direkt auf deinem Handy.</p></div>
