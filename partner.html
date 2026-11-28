@@ -15,177 +15,119 @@
   <meta property="og:url" content="https://getup-alarm.de/partner" />
   <meta property="og:image" content="https://getup-alarm.de/og.jpg" />
   <link rel="preload" href="fonts/luckiest-guy.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="app.css" />
-  <style>
-    /* Nur für diese Seite. Feste Farben wie in den Folien des Creator-Playbooks, unabhängig von Tag und Nacht. */
-    .partner main { --cream: #f3e3bf; --paper: #fffaf0; --ink: #1b1420; --cherry: #e8344e; --yellow: #ffd23f; --teal: #1f8a8a; }
-    .partner main { color: var(--ink); } /* Feste Farben nur im Inhalt, Kopfleiste folgt Tag und Nacht */
-    .slide { position: relative; padding: 64px 20px 92px; overflow: clip;
-      background: radial-gradient(circle, var(--dots-c) 0 1.2px, transparent 1.6px) 0 0 / 16px 16px, var(--bg-c); }
-    .slide--cream { --bg-c: var(--cream); --dots-c: rgba(232, 52, 78, .14); }
-    .slide--cherry { --bg-c: var(--cherry); --dots-c: rgba(27, 20, 32, .12); }
-    .slide > .inner { max-width: 64rem; margin: 0 auto; position: relative; z-index: 1; }
-    /* Doppelte Welle unten, wie am Fuß jeder Folie */
-    .wave { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 46px; display: block; }
-
-    .label { display: inline-block; margin: 0 0 16px; font: 700 .78rem/1 var(--font-mono); letter-spacing: .16em;
-      text-transform: uppercase; color: var(--ink); background: var(--paper); padding: 7px 10px 6px;
-      border: 2px solid var(--ink); border-radius: 6px; box-shadow: 2px 2px 0 var(--ink); }
-    .headline { font-family: var(--font-display); font-weight: 400; letter-spacing: .01em; line-height: 1;
-      font-size: clamp(2.3rem, 7vw, 3.8rem); margin: 0 0 34px; color: var(--cherry);
-      -webkit-text-stroke: .035em var(--ink); paint-order: stroke fill;
-      text-shadow: .05em .05em 0 var(--teal); }
-    .slide--cherry .headline { color: var(--yellow); text-shadow: .05em .05em 0 var(--teal), .08em .08em 0 var(--ink); }
-
-    .card-s { background: var(--paper); color: var(--ink); border: 3px solid var(--ink); border-radius: 14px;
-      box-shadow: 5px 5px 0 var(--ink); padding: 18px 20px 20px; }
-    .card-s .stufe { display: inline-block; margin: 0 0 8px; font: 700 .72rem/1 var(--font-mono); letter-spacing: .14em;
-      text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 5px 7px 4px; border-radius: 4px; }
-    .card-s h2, .card-s h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.45rem; letter-spacing: .02em;
-      line-height: 1.05; margin: 0 0 10px; color: var(--ink); }
-    .card-s p { margin: 0; color: var(--ink); font-size: 1rem; line-height: 1.5; }
-    .pill { display: inline-block; margin: 16px 0 0; font: 600 .98rem/1.2 var(--font-body); color: var(--ink);
-      background: var(--yellow); padding: 8px 14px; border: 2px solid var(--ink); border-radius: 999px;
-      box-shadow: 2px 2px 0 var(--ink); }
-
-    .stufen { display: grid; gap: 22px; }
-
-    .apply { display: grid; gap: 36px; }
-    .apply .pill a { color: var(--ink); }
-    .apply .domain { margin: 18px 0 0; font: 700 .78rem/1 var(--font-mono); letter-spacing: .16em; color: var(--ink); }
-
-    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 22px 0 0; }
-    .actions .pill { margin: 0; }
-    .go { display: inline-block; cursor: pointer; font: 400 1.25rem/1 var(--font-display); letter-spacing: .03em;
-      color: var(--ink); background: var(--yellow); border: 3px solid var(--ink); border-radius: 12px;
-      padding: 15px 22px 11px; box-shadow: 4px 4px 0 var(--ink); text-decoration: none; transition: transform .08s, box-shadow .08s; }
-    .go:hover { color: var(--ink); filter: brightness(1.05); }
-    .go:active { transform: translate(4px, 4px); box-shadow: none; }
-    .apply .stage { padding: 10px 0 0; }
-    .apply .phone { --tilt: 6deg; width: min(62%, 15rem); }
-
-    .popup { --cream: #f3e3bf; --paper: #fffaf0; --ink: #1b1420; --cherry: #e8344e; --yellow: #ffd23f; --teal: #1f8a8a;
-      width: min(34rem, calc(100% - 28px)); max-height: calc(100% - 28px); margin: auto; padding: 26px 22px 22px;
-      color: var(--ink); background: var(--paper); border: 3px solid var(--ink); border-radius: 16px;
-      box-shadow: 6px 6px 0 var(--ink); overflow: auto; }
-    .popup::backdrop { background: rgba(27, 20, 32, .55); }
-    .popup .close { position: absolute; top: 10px; right: 12px; width: 40px; height: 40px; cursor: pointer;
-      font: 700 1.6rem/1 var(--font-body); color: var(--ink); background: var(--paper);
-      border: 2px solid var(--ink); border-radius: 50%; box-shadow: 2px 2px 0 var(--ink); }
-    .popup-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 6vw, 2.3rem); line-height: 1;
-      margin: 0 0 20px; color: var(--cherry); -webkit-text-stroke: .03em var(--ink); paint-order: stroke fill;
-      text-shadow: .05em .05em 0 var(--teal); }
-    .thanks-view p { margin: 0 0 20px; }
-
-    form.creator .row { display: grid; gap: 0 14px; }
-    form.creator .field { margin: 0 0 14px; }
-    form.creator label { display: block; font-weight: 600; font-size: .95rem; color: var(--ink); margin: 0 0 5px; }
-    form.creator label small { font-weight: 500; color: #5d4e45; }
-    form.creator input[type=text], form.creator input[type=email], form.creator input[type=number], form.creator textarea {
-      width: 100%; font: 500 1rem/1.4 var(--font-body); color: var(--ink); background: #fff;
-      border: 2px solid var(--ink); border-radius: 10px; padding: 10px 12px; }
-    form.creator input:focus, form.creator textarea:focus { outline: 3px solid var(--yellow); outline-offset: 0; }
-    form.creator ::placeholder { color: #9a8d82; }
-    form.creator textarea { min-height: 4.2em; resize: vertical; }
-    form.creator .note { font-size: .85rem; color: #5d4e45; margin: 2px 0 16px; line-height: 1.45; }
-    form.creator a { color: var(--cherry); }
-    form.creator .send { width: 100%; cursor: pointer; font: 400 1.2rem/1 var(--font-display); letter-spacing: .03em;
-      color: var(--paper); background: var(--cherry); border: 3px solid var(--ink); border-radius: 12px;
-      padding: 15px 18px 11px; box-shadow: 4px 4px 0 var(--ink); transition: transform .08s, box-shadow .08s; }
-    form.creator .send:active { transform: translate(4px, 4px); box-shadow: none; }
-    form.creator .alt { margin: 12px 0 0; font-size: .88rem; color: var(--ink); }
-    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-
-    @media (min-width: 820px) {
-      .slide { padding: 88px 28px 116px; }
-      /* Stufen als Treppe: jede Stufe ein Stück höher, wie auf der Folie */
-      .stufen { grid-template-columns: repeat(3, 1fr); align-items: start; gap: 18px; }
-      .stufen .card-s:nth-child(1) { margin-top: 112px; }
-      .stufen .card-s:nth-child(2) { margin-top: 56px; }
-      .apply { grid-template-columns: 1.3fr .7fr; gap: 48px; align-items: center; }
-      form.creator .row { grid-template-columns: 1fr 6.5rem; }
-    }
-    @media (prefers-reduced-motion: reduce) { form.creator .send, .go { transition: none; } }
-  </style>
+  <link rel="stylesheet" href="3d.css" />
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/three.min.js" defer></script>
+  <script src="js/clock.js" defer></script>
+  <script src="js/3d.js" defer></script>
 </head>
-<body class="landing partner">
-  <header class="bar">
-    <div class="inner">
-      <a class="home" href="./">GET UP!</a>
-      <nav class="jump" aria-label="Auf dieser Seite">
-        <a href="#programm">PROGRAMM</a>
-        <a class="cta" href="#bewerben" data-open>BEWERBEN</a>
-      </nav>
+
+<body>
+<header class="bar">
+  <div class="inner gutter">
+    <a class="home" href="./">GET UP!</a>
+    <a class="cta" href="#bewerben" data-open>BEWERBEN</a>
+  </div>
+</header>
+
+<main>
+  <!-- Kopf: Creator werden -->
+  <section class="panel cherry hero">
+    <div class="inner gutter split">
+      <div>
+        <p class="kicker">Creator-Programm · Deutschland</p>
+        <h1 class="pop pop--hero"><span class="sm">Du drehst gern?</span><span class="lg" style="font-size: clamp(3.6rem, 13vw, 7rem)">Werde Creator.</span></h1>
+        <p class="lede">Dreh Videos für den Wecker, der erst Ruhe gibt, wenn man wirklich wach ist, und verdien an jedem Video mit.</p>
+        <div class="actions">
+          <a class="go" href="#bewerben" data-open>Jetzt bewerben</a>
+          <a class="cta" style="margin-left: 0; background: var(--cream); color: var(--ink)" href="#programm">So läuft’s</a>
+        </div>
+      </div>
+      <div class="stage" id="heroStage" aria-label="Der GET UP! Wecker in 3D">
+        <div class="burst" aria-hidden="true"><i></i></div>
+        <canvas id="clock" aria-hidden="true"></canvas>
+        <div class="coin coin-eur" style="--c: var(--yellow); top: 4%; right: 4%; z-index: 4" aria-hidden="true"><b class="cf">€</b><b class="cb">€</b></div>
+        <div class="coin coin-eur" style="--c: var(--yellow); --s: 3.8rem; bottom: 10%; right: 0; z-index: 4; animation-delay: -2.2s, -1.4s" aria-hidden="true"><b class="cf">€</b><b class="cb">€</b></div>
+        <span class="hint" aria-hidden="true">Tipp den Wecker an!</span>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main>
+  <div class="tickers" aria-hidden="true">
+    <div class="ticker t2"><div class="track">
+      <span>EINREICHEN</span><span>★</span><span>SELBST POSTEN</span><span>★</span><span>DEIN WECKER-KANAL</span><span>★</span><span>EINREICHEN</span><span>★</span><span>SELBST POSTEN</span><span>★</span><span>DEIN WECKER-KANAL</span><span>★</span>
+      <span>EINREICHEN</span><span>★</span><span>SELBST POSTEN</span><span>★</span><span>DEIN WECKER-KANAL</span><span>★</span><span>EINREICHEN</span><span>★</span><span>SELBST POSTEN</span><span>★</span><span>DEIN WECKER-KANAL</span><span>★</span>
+    </div></div>
+    <div class="ticker t1"><div class="track">
+      <span>3 STUFEN</span><span>★</span><span>DU WÄCHST MIT</span><span>★</span><span>BEWIRB DICH JETZT</span><span>★</span><span>3 STUFEN</span><span>★</span><span>DU WÄCHST MIT</span><span>★</span><span>BEWIRB DICH JETZT</span><span>★</span>
+      <span>3 STUFEN</span><span>★</span><span>DU WÄCHST MIT</span><span>★</span><span>BEWIRB DICH JETZT</span><span>★</span><span>3 STUFEN</span><span>★</span><span>DU WÄCHST MIT</span><span>★</span><span>BEWIRB DICH JETZT</span><span>★</span>
+    </div></div>
+  </div>
 
-    <!-- Folie „Das Programm“ -->
-    <section class="slide slide--cream" id="programm">
-      <div class="inner">
-        <p class="label">Das Programm</p>
-        <h1 class="headline">3 Stufen. Du w&auml;chst mit.</h1>
-        <div class="stufen">
-          <div class="card-s">
-            <p class="stufe">Stufe 1</p>
-            <h2>Einreichen</h2>
-            <p>Du drehst, wir schalten dein Video als Werbung. Kein eigener Post n&ouml;tig.</p>
-            <p class="pill">30&nbsp;&euro;/Video + 8&nbsp;&euro;/Kauf</p>
-          </div>
-          <div class="card-s">
-            <p class="stufe">Stufe 2</p>
-            <h2>Selbst posten</h2>
-            <p>Dein Video auf deinem Kanal. Views bringen Bonus, wir pushen die besten.</p>
-            <p class="pill">Bonus bis 1.000&nbsp;&euro;/Video</p>
-          </div>
-          <div class="card-s">
-            <p class="stufe">Stufe 3</p>
-            <h2>Dein Wecker-Kanal</h2>
-            <p>Eigener Account &bdquo;vorname.aufwachen&ldquo; &ndash; wir pushen jedes Video, das du postest.</p>
-            <p class="pill">Fixum + 15&nbsp;&euro;/Kauf</p>
-          </div>
+  <!-- Das Programm -->
+  <section class="panel yellow" id="programm">
+    <div class="inner gutter">
+      <p class="tag">Das Programm</p>
+      <h2 class="pop"><span class="sm">3 Stufen.</span><span class="lg">Du wächst mit.</span></h2>
+      <div class="stairs">
+        <div class="slab rv">
+          <span class="big-num" aria-hidden="true">1</span>
+          <p class="stufe">Stufe 1</p>
+          <h2>Einreichen</h2>
+          <p>Du drehst, wir schalten dein Video als Werbung. Kein eigener Post nötig.</p>
+          <p class="amount">30 €/Video + 8 €/Kauf</p>
+        </div>
+        <div class="slab rv">
+          <span class="big-num" aria-hidden="true">2</span>
+          <p class="stufe">Stufe 2</p>
+          <h2>Selbst posten</h2>
+          <p>Dein Video auf deinem Kanal. Views bringen Bonus, wir pushen die besten.</p>
+          <p class="amount">Bonus bis 1.000 €/Video</p>
+        </div>
+        <div class="slab rv">
+          <span class="big-num" aria-hidden="true">3</span>
+          <p class="stufe">Stufe 3</p>
+          <h2>Dein Wecker-Kanal</h2>
+          <p>Eigener Account „vorname.aufwachen“, wir pushen jedes Video, das du postest.</p>
+          <p class="amount">Fixum + 15 €/Kauf</p>
         </div>
       </div>
-      <svg class="wave" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 C 200 8, 400 32, 600 20 S 1000 8, 1200 20 V46 H0Z" fill="#1b1420"/><path d="M0 26 C 200 14, 400 38, 600 26 S 1000 14, 1200 26 V46 H0Z" fill="#fffaf0"/><path d="M0 32 C 200 20, 400 44, 600 32 S 1000 20, 1200 32 V46 H0Z" fill="#e8344e"/></svg>
-    </section>
+    </div>
+  </section>
 
-    <!-- Folie „Mach mit“ -->
-    <section class="slide slide--cherry" id="bewerben">
-      <div class="inner apply">
-        <div>
-          <p class="label">Mach mit</p>
-          <h2 class="headline">Bewirb dich<br />jetzt!</h2>
-          <div class="card-s">
-            <h3>Schick uns</h3>
-            <p>Name &amp; Alter &middot; Stadt &middot; Links zu deinen Kan&auml;len &middot; einen Satz &uuml;ber dich &middot;
-              falls vorhanden Referenzvideos</p>
-          </div>
-          <div class="actions">
-            <a class="go" id="open-form" data-open href="mailto:team@getup-alarm.de?subject=Creator-Bewerbung">Jetzt bewerben</a>
-            <p class="pill">Mail an: <a href="mailto:team@getup-alarm.de">team@getup-alarm.de</a></p>
-          </div>
-          <p class="domain">GETUP-ALARM.DE</p>
+  <!-- Mach mit -->
+  <section class="panel night" id="bewerben">
+    <div class="inner gutter split">
+      <div>
+        <p class="tag">Mach mit</p>
+        <h2 class="pop"><span class="sm">Bewirb dich</span><span class="lg">jetzt!</span></h2>
+        <div class="slab" style="--sl: var(--hot)">
+          <h3>Schick uns</h3>
+          <p>Name &amp; Alter · Stadt · Links zu deinen Kanälen · einen Satz über dich · falls vorhanden Referenzvideos</p>
         </div>
-        <div class="stage">
-          <div class="phone">
-            <img src="img/app-wecker.webp" alt="GET UP! mit einem gestellten Wecker" width="600" height="1304" loading="lazy" decoding="async" />
-          </div>
+        <div class="actions">
+          <a class="go" id="open-form" data-open href="mailto:team@getup-alarm.de?subject=Creator-Bewerbung">Jetzt bewerben</a>
+          <a class="mailpill" href="mailto:team@getup-alarm.de">team@getup-alarm.de</a>
         </div>
       </div>
-      <svg class="wave" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 C 200 8, 400 32, 600 20 S 1000 8, 1200 20 V46 H0Z" fill="#1b1420"/><path d="M0 26 C 200 14, 400 38, 600 26 S 1000 14, 1200 26 V46 H0Z" fill="#fffaf0"/><path d="M0 32 C 200 20, 400 44, 600 32 S 1000 20, 1200 32 V46 H0Z" fill="#1b1420"/></svg>
-    </section>
+      <div class="stage">
+        <div class="burst" style="--burst: var(--hot)" aria-hidden="true"><i></i></div>
+        <div class="dev" style="--ry: -16deg; --rz: 5deg">
+          <div class="face"><img src="img/app-wecker.webp" alt="GET UP! mit einem gestellten Wecker" width="600" height="1304" loading="lazy"></div>
+        </div>
+        <div class="coin coin-eur" style="--c: var(--yellow); --s: 4.6rem; top: 8%; left: 2%" aria-hidden="true"><b class="cf">€</b><b class="cb">€</b></div>
+        <div class="coin" style="--c: var(--pink); --s: 3.6rem; bottom: 6%; right: 6%; animation-delay: -1.8s, -.8s" aria-hidden="true"><b class="cf">★</b><b class="cb">★</b></div>
+      </div>
+    </div>
+  </section>
+</main>
 
-  </main>
-
-  <!-- Bewerbungsformular als Pop-up; ohne JavaScript führt „Jetzt bewerben“ direkt zur Mail -->
-  <dialog class="popup" id="bewerbung" aria-labelledby="popup-title">
-    <button class="close" type="button" aria-label="Schließen" data-close>&times;</button>
-    <div class="form-view">
-      <p class="label">Mach mit</p>
-      <h2 class="popup-title" id="popup-title">Bewirb dich jetzt!</h2>
-              <!-- Versand über FormSubmit: schickt den Inhalt als Mail an team@getup-alarm.de, ohne eigenen Server. -->
-              <form class="creator" action="https://formsubmit.co/team@getup-alarm.de" method="POST" accept-charset="UTF-8">
+<dialog class="popup" id="bewerbung" aria-labelledby="popup-title">
+  <button class="close" type="button" aria-label="Schließen" data-close>×</button>
+  <div class="form-view">
+    <p class="tag">Mach mit</p>
+    <h2 class="popup-title" id="popup-title">Bewirb dich jetzt!</h2>
+    <form class="creator" action="https://formsubmit.co/team@getup-alarm.de" method="POST" accept-charset="UTF-8">
                 <input type="hidden" name="_subject" value="Creator-Bewerbung über getup-alarm.de/partner" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_captcha" value="false" />
@@ -230,44 +172,40 @@
                 <p class="alt">Lieber per Mail? Schreib an
                   <a href="mailto:team@getup-alarm.de?subject=Creator-Bewerbung&amp;body=Name%3A%20%0AAlter%3A%20%0AStadt%3A%20%0ALinks%20zu%20meinen%20Kan%C3%A4len%3A%20%0AEin%20Satz%20%C3%BCber%20mich%3A%20%0AReferenzvideos%3A%20">team@getup-alarm.de</a>.</p>
               </form>
-    </div>
-    <div class="thanks-view" hidden>
-      <h2 class="popup-title">Danke!</h2>
-      <p>Deine Bewerbung ist bei uns angekommen. Wir melden uns per Mail bei dir.</p>
-      <button class="go" type="button" data-close>Schlie&szlig;en</button>
-    </div>
-  </dialog>
+  </div>
+  <div class="thanks-view" hidden>
+    <h2 class="popup-title">Danke!</h2>
+    <p>Deine Bewerbung ist bei uns angekommen. Wir melden uns per Mail bei dir.</p>
+        <button class="go" type="button" data-close>Schließen</button>
+  </div>
+</dialog>
 
-  <footer class="site-foot">
-    <div class="inner">
-      <nav aria-label="Rechtliches und Kontakt">
-        <a href="./">GET UP!</a>
-        <a href="privacy.html">Datenschutz</a>
-        <a href="delete.html">Konto l&ouml;schen</a>
-        <a href="impressum.html">Impressum</a>
-        <a href="partner.html">Creator werden</a>
-        <a href="mailto:support@getup-alarm.de">support@getup-alarm.de</a>
-      </nav>
-      <p>&copy; 2026 Jen Eric Prei&szlig;er &middot;
-        <a href="https://chasingdreamsinteractive.com/">Ein Projekt von Chasing Dreams Interactive</a></p>
-    </div>
-  </footer>
+<footer class="site-foot">
+  <div class="inner gutter">
+    <nav aria-label="Rechtliches und Kontakt">
+      <a href="./">GET UP!</a>
+      <a href="privacy.html">Datenschutz</a>
+      <a href="delete.html">Konto löschen</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="partner.html">Creator werden</a>
+      <a href="mailto:support@getup-alarm.de">support@getup-alarm.de</a>
+    </nav>
+    <p>© 2026 Jen Eric Preißer · <a href="https://chasingdreamsinteractive.com/">Ein Projekt von Chasing Dreams Interactive</a></p>
+  </div>
+</footer>
 
-  <script>
-    (function () {
-      var dlg = document.getElementById('bewerbung');
-      if (!dlg || typeof dlg.showModal !== 'function') return;
-      var formView = dlg.querySelector('.form-view'), thanks = dlg.querySelector('.thanks-view');
-      function open(showThanks) {
-        formView.hidden = !!showThanks; thanks.hidden = !showThanks;
-        dlg.showModal();
-      }
-      document.querySelectorAll('[data-open]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); open(false); }); });
-      dlg.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { dlg.close(); }); });
-      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
-      // FormSubmit leitet nach dem Absenden auf /partner#danke zurück
-      if (location.hash === '#danke') { open(true); history.replaceState(null, '', location.pathname); }
-    })();
-  </script>
+<script>
+  (function () {
+    var dlg = document.getElementById('bewerbung');
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+    var formView = dlg.querySelector('.form-view'), thanks = dlg.querySelector('.thanks-view');
+    function open(showThanks) { formView.hidden = !!showThanks; thanks.hidden = !showThanks; dlg.showModal(); }
+    document.querySelectorAll('[data-open]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); open(false); }); });
+    dlg.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { dlg.close(); }); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    // FormSubmit leitet nach dem Absenden auf /partner#danke zurück
+    if (location.hash === '#danke') { open(true); history.replaceState(null, '', location.pathname); }
+  })();
+</script>
 </body>
 </html>

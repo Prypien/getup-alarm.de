@@ -20,9 +20,12 @@
   <!-- Banner „In der App öffnen“ in Safari auf dem iPhone -->
   <meta name="apple-itunes-app" content="app-id=6818147917" />
   <link rel="preload" href="fonts/luckiest-guy.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="3d.css" />
+  <script src="js/three.min.js" defer></script>
+  <script src="js/clock.js" defer></script>
+  <script src="js/3d.js" defer></script>
   <script>
-    // Einblenden beim Scrollen und der passende Store-Knopf vorn – ohne JavaScript ist einfach alles sichtbar.
+    // 3D-Effekte und der passende Store-Knopf vorn – ohne JavaScript ist einfach alles sichtbar.
     (function (d) {
       d.classList.add('js');
       var ua = navigator.userAgent || '';
@@ -43,267 +46,227 @@
   }
   </script>
 </head>
-<body class="landing">
-  <header class="bar">
-    <div class="inner">
-      <a class="home" href="./">GET UP!</a>
-      <nav class="jump" aria-label="Creator-Programm">
-        <a class="cta" href="partner.html">WERDE CREATOR!</a>
-      </nav>
+<body>
+<header class="bar">
+  <div class="inner gutter">
+    <a class="home" href="./">GET UP!</a>
+    <a class="cta" href="partner.html">WERDE CREATOR!</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1 · Snooze? Nein. -->
+  <section class="panel cherry hero">
+    <div class="inner gutter split">
+      <div>
+        <p class="kicker">GET UP! · Der Wecker mit Aufgaben</p>
+        <h1 class="pop pop--hero"><span class="sm">Snooze?</span><span class="lg"><span class="ch">N</span><span class="ch">e</span><span class="ch">i</span><span class="ch">n</span><span class="ch">.</span></span></h1>
+        <p class="lede">Der Wecker, der erst Ruhe gibt, wenn du wirklich wach bist. Er klingelt, bis du eine Aufgabe gelöst hast: rechnen, Kniebeugen vor der Kamera, das gemachte Bett fotografieren.</p>
+        <div class="stores">
+          <a class="badge badge--ios" href="https://apps.apple.com/de/app/id6818147917"><img src="img/badge-app-store-de.svg" alt="Laden im App Store" width="168" height="56"></a>
+          <a class="badge badge--play" href="https://play.google.com/store/apps/details?id=com.jenpreisser.gtfoob"><img src="img/badge-google-play-de.png" alt="Jetzt bei Google Play" width="188" height="56"></a>
+        </div>
+        <p class="fine">Kostenlos laden · keine Werbung in der App · derzeit in Deutschland</p>
+      </div>
+      <div class="stage" id="heroStage" aria-label="GET UP! klingelt">
+        <div class="burst" aria-hidden="true"><i></i></div>
+        <canvas id="clock" aria-hidden="true"></canvas>
+        <span class="hint" aria-hidden="true">Tipp den Wecker an!</span>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main>
+  <div class="tickers" aria-hidden="true">
+    <div class="ticker t2"><div class="track">
+      <span>FÜR DEN KOPF</span><span>★</span><span>ZUM AUFSTEHEN</span><span>★</span><span>MIT BEWEISFOTO</span><span>★</span><span>HAMSTER-RAVE</span><span>★</span><span>SCHREI-ZIEGE</span><span>★</span><span>KLASSIK-KATZE</span><span>★</span>
+      <span>FÜR DEN KOPF</span><span>★</span><span>ZUM AUFSTEHEN</span><span>★</span><span>MIT BEWEISFOTO</span><span>★</span><span>HAMSTER-RAVE</span><span>★</span><span>SCHREI-ZIEGE</span><span>★</span><span>KLASSIK-KATZE</span><span>★</span>
+    </div></div>
+    <div class="ticker t1"><div class="track">
+      <span>KEIN SNOOZE</span><span>★</span><span>KEINE AUSREDEN</span><span>★</span><span>31 AUFGABEN</span><span>★</span><span>TURNIERE GEGEN FREUNDE</span><span>★</span><span>ÜBER 40 WECKTÖNE</span><span>★</span><span>KEINE WERBUNG</span><span>★</span>
+      <span>KEIN SNOOZE</span><span>★</span><span>KEINE AUSREDEN</span><span>★</span><span>31 AUFGABEN</span><span>★</span><span>TURNIERE GEGEN FREUNDE</span><span>★</span><span>ÜBER 40 WECKTÖNE</span><span>★</span><span>KEINE WERBUNG</span><span>★</span>
+    </div></div>
+  </div>
 
-    <!-- 1 · Snooze? Nein. -->
-    <section class="panel panel--cherry">
-      <div class="inner split">
+  <!-- 2 · Erst lösen, dann aus. -->
+  <section class="panel yellow" id="ablauf">
+    <div class="inner gutter">
+      <div class="split">
         <div>
-          <p class="kicker">GET UP! &middot; Der Wecker mit Aufgaben</p>
-          <h1 class="pop pop--hero"><span class="pop-sm">Snooze?</span><span class="pop-lg">Nein.</span></h1>
-          <p class="lede">
-            Der Wecker, der erst Ruhe gibt, wenn du wirklich wach bist. Er klingelt, bis du eine Aufgabe
-            gel&ouml;st hast: rechnen, Kniebeugen vor der Kamera, das gemachte Bett fotografieren.
-          </p>
-          <div class="stores">
-            <a class="badge badge--ios" href="https://apps.apple.com/de/app/id6818147917"><img src="img/badge-app-store-de.svg" alt="Laden im App Store" width="168" height="56" /></a>
-            <a class="badge badge--play" href="https://play.google.com/store/apps/details?id=com.jenpreisser.gtfoob"><img src="img/badge-google-play-de.png" alt="Jetzt bei Google Play" width="188" height="56" /></a>
-          </div>
-          <p class="fine">Kostenlos laden &middot; keine Werbung in der App &middot; derzeit in Deutschland</p>
+          <h2 class="pop"><span class="sm">Erst lösen,</span><span class="lg">dann aus.</span></h2>
+          <p class="lede">So läuft dein Morgen mit GET UP!: Der Wecker lässt sich nicht wegdrücken. Er hört erst auf, wenn die Aufgabe geschafft ist.</p>
         </div>
         <div class="stage">
-          <div class="burst" aria-hidden="true"><i></i></div>
-          <div class="phone phone--ring">
-            <img src="img/app-klingeln.webp" alt="GET UP! klingelt um 09:21 und zeigt den Knopf „Aufgabe starten“" width="600" height="1304" fetchpriority="high" decoding="async" />
+          <div class="burst" style="--burst: var(--cherry)" aria-hidden="true"><i></i></div>
+          <div class="dev" style="--ry: 16deg; --rz: -4deg">
+            <div class="face"><img src="img/app-rechnen.webp" alt="Aufgabe Rechnen: 4 mal 3 plus 12, darunter ein Ziffernblock" width="600" height="1304" loading="lazy"></div>
           </div>
         </div>
       </div>
-    </section>
+      <ol class="steps3">
+        <li class="card3 rv"><h3>Wecker stellen</h3><p>Uhrzeit wählen, Aufgabe wählen, schlafen gehen. Wer mag, lässt den Zufall entscheiden.</p></li>
+        <li class="card3 rv"><h3>Es klingelt</h3><p>Auch über dem Sperrbildschirm. Der Wecker hält die Lautstärke oben. Leiser drücken bringt dich nicht schneller raus.</p></li>
+        <li class="card3 rv"><h3>Lösen, dann Ruhe</h3><p>Erst nach der Aufgabe ist der Wecker aus. Auf Wunsch fragt der Wach-Check fünf Minuten später noch einmal nach.</p></li>
+      </ol>
+    </div>
+  </section>
 
-    <div class="ticker" aria-hidden="true">
-      <div class="track">
-        <span>KEIN SNOOZE</span><span>&#9733;</span><span>KEINE AUSREDEN</span><span>&#9733;</span><span>31 AUFGABEN</span><span>&#9733;</span><span>TURNIERE GEGEN FREUNDE</span><span>&#9733;</span><span>&Uuml;BER 40 WECKT&Ouml;NE</span><span>&#9733;</span><span>KEINE WERBUNG</span><span>&#9733;</span>
-        <span>KEIN SNOOZE</span><span>&#9733;</span><span>KEINE AUSREDEN</span><span>&#9733;</span><span>31 AUFGABEN</span><span>&#9733;</span><span>TURNIERE GEGEN FREUNDE</span><span>&#9733;</span><span>&Uuml;BER 40 WECKT&Ouml;NE</span><span>&#9733;</span><span>KEINE WERBUNG</span><span>&#9733;</span>
+  <!-- 3 · 31 Aufgaben: 3D-Karussell -->
+  <section class="panel orange" id="aufgaben">
+    <div class="inner gutter">
+      <div class="split">
+        <div>
+          <h2 class="pop"><span class="lg">31 Aufgaben</span><span class="sm">statt Snooze.</span></h2>
+          <p class="lede">Für den Kopf, für die Beine oder mit Beweisfoto. Je länger deine Streak, desto schwerer werden sie.</p>
+        </div>
+        <ul class="chips" aria-label="Beispiele für Aufgaben">
+          <li>Rechnen</li><li>Bombe entschärfen</li><li>Simon sagt</li><li>Memory</li><li>Flaggen-Quiz</li><li>Kniebeugen</li>
+          <li>Hampelmänner</li><li>Liegestütze</li><li>Tanzen</li><li>Bett fotografieren</li><li>Touch Grass</li><li>Zufall</li>
+        </ul>
+      </div>
+      <div class="carousel" id="carousel" aria-label="Sechs Aufgaben aus der App im Karussell">
+        <div class="floor" aria-hidden="true"></div>
+        <div class="ring" id="ring">
+          <div class="slot" style="--k: 0"><div class="dev"><div class="face"><img src="img/app-bombe.webp" alt="Bombe entschärfen" loading="lazy"></div></div><span class="label">Bombe entschärfen</span></div>
+          <div class="slot" style="--k: 1"><div class="dev"><div class="face"><img src="img/app-simon.webp" alt="Simon sagt" loading="lazy"></div></div><span class="label">Simon sagt</span></div>
+          <div class="slot" style="--k: 2"><div class="dev"><div class="face"><img src="img/app-kniebeugen.webp" alt="Kniebeugen vor der Kamera" loading="lazy"></div></div><span class="label">Kniebeugen</span></div>
+          <div class="slot" style="--k: 3"><div class="dev"><div class="face"><img src="img/app-memory.webp" alt="Memory" loading="lazy"></div></div><span class="label">Memory</span></div>
+          <div class="slot" style="--k: 4"><div class="dev"><div class="face"><img src="img/app-gras.webp" alt="Touch Grass: Gras fotografieren" loading="lazy"></div></div><span class="label">Touch Grass</span></div>
+          <div class="slot" style="--k: 5"><div class="dev"><div class="face"><img src="img/app-rechnen.webp" alt="Rechnen" loading="lazy"></div></div><span class="label">Rechnen</span></div>
+        </div>
+      </div>
+      <p class="drag">← Zum Drehen ziehen →</p>
+      <div class="tiles">
+        <div class="card3 rv"><h3>Für den Kopf</h3><p>Rechnen, Bombe entschärfen, Simon sagt, Memory, Flaggen-Quiz oder einen Satz nachsprechen.</p></div>
+        <div class="card3 rv"><h3>Zum Aufstehen</h3><p>Kniebeugen, Hampelmänner, Liegestütze oder Tanzen. Die Kamera zählt mit, ausgewertet wird direkt auf deinem Handy.</p></div>
+        <div class="card3 rv"><h3>Mit Beweisfoto</h3><p>Das gemachte Bett, der Himmel, ein Barcode, den du festgelegt hast, oder ein Ort, den du vorher fotografiert hast.</p></div>
       </div>
     </div>
+  </section>
 
-    <!-- 2 · Erst lösen, dann aus. -->
-    <section class="panel panel--yellow" id="ablauf">
-      <div class="inner">
-        <div class="split">
-          <div>
-            <h2 class="pop reveal"><span class="pop-sm">Erst l&ouml;sen,</span><span class="pop-lg">dann aus.</span></h2>
-            <p class="lede">So l&auml;uft dein Morgen mit GET UP!: Der Wecker l&auml;sst sich nicht wegdr&uuml;cken.
-              Er h&ouml;rt erst auf, wenn die Aufgabe geschafft ist.</p>
-          </div>
-          <div class="stage reveal">
-            <div class="burst" style="--burst: var(--k-cherry)" aria-hidden="true"><i></i></div>
-            <div class="phone" style="--tilt: -4deg">
-              <img src="img/app-rechnen.webp" alt="Aufgabe Rechnen: 4 mal 3 plus 12, darunter ein Ziffernblock" width="600" height="1304" loading="lazy" decoding="async" />
-            </div>
-          </div>
-        </div>
-        <ol class="steps3">
-          <li class="reveal">
-            <h3>Wecker stellen</h3>
-            <p>Uhrzeit w&auml;hlen, Aufgabe w&auml;hlen, schlafen gehen. Wer mag, l&auml;sst den Zufall entscheiden.</p>
-          </li>
-          <li class="reveal">
-            <h3>Es klingelt</h3>
-            <p>Auch &uuml;ber dem Sperrbildschirm. Der Wecker h&auml;lt die Lautst&auml;rke oben &ndash; leiser dr&uuml;cken
-              bringt dich nicht schneller raus.</p>
-          </li>
-          <li class="reveal">
-            <h3>L&ouml;sen, dann Ruhe</h3>
-            <p>Erst nach der Aufgabe ist der Wecker aus. Auf Wunsch fragt der Wach-Check f&uuml;nf Minuten sp&auml;ter
-              noch einmal nach.</p>
-          </li>
-        </ol>
+  <!-- 4 · Gegen deine Freunde. -->
+  <section class="panel night" id="freunde">
+    <div class="inner gutter split">
+      <div>
+        <h2 class="pop"><span class="sm">Gegen deine</span><span class="lg">Freunde.</span></h2>
+        <ul class="ticks">
+          <li>Füg Freunde per Code, Link oder QR-Code hinzu.</li>
+          <li>Nach dem Aufstehen zeigt ihr euch ein Selfie und seht, wer schon wach ist.</li>
+          <li>Starte ein Turnier mit bis zu 9 Freunden, über 1, 2 oder 4 Wochen.</li>
+          <li>Wer zuerst wach ist, schickt den anderen eine Sprach- oder Videonachricht zum Klingeln und darf allen, die noch schlafen, eine Aufgabe zuteilen.</li>
+          <li>Am Ende warten Podest, Krone und Medaillen. Und die Revanche.</li>
+        </ul>
       </div>
-    </section>
-
-    <!-- 3 · 31 Aufgaben statt Snooze -->
-    <section class="panel panel--orange" id="aufgaben">
-      <div class="inner">
-        <div class="split split--flip">
-          <div>
-            <h2 class="pop reveal"><span class="pop-lg">31 Aufgaben</span><span class="pop-sm">statt Snooze.</span></h2>
-            <p class="lede">F&uuml;r den Kopf, f&uuml;r die Beine oder mit Beweisfoto. Je l&auml;nger deine Streak,
-              desto schwerer werden sie.</p>
-            <ul class="chips" aria-label="Beispiele f&uuml;r Aufgaben">
-              <li>Rechnen</li><li>Bombe entsch&auml;rfen</li><li>Simon sagt</li><li>Memory</li>
-              <li>Flaggen-Quiz</li><li>Kniebeugen</li><li>Hampelm&auml;nner</li><li>Liegest&uuml;tze</li>
-              <li>Tanzen</li><li>Bett fotografieren</li><li>Barcode</li><li>Zufall</li>
-            </ul>
-          </div>
-          <div class="stage stage--pair reveal">
-            <div class="phone">
-              <img src="img/app-bombe.webp" alt="Aufgabe Bombe entsch&auml;rfen: drei Kabel durchschneiden" width="600" height="1304" loading="lazy" decoding="async" />
-            </div>
-            <div class="phone">
-              <img src="img/app-simon.webp" alt="Aufgabe Simon sagt mit vier farbigen Feldern" width="600" height="1304" loading="lazy" decoding="async" />
-            </div>
-          </div>
+      <div class="stage">
+        <div class="burst" style="--burst: var(--hot)" aria-hidden="true"><i></i></div>
+        <div class="dev" style="--ry: -18deg; --rz: 5deg">
+          <div class="face"><img src="img/app-turnier.webp" alt="Turnier „MTC Monats-Cup“ mit Podest: Adam vorn, Jen auf Platz 2, Bobby auf Platz 3" width="600" height="1304" loading="lazy"></div>
         </div>
-        <div class="tiles">
-          <div class="tile reveal">
-            <h3>F&uuml;r den Kopf</h3>
-            <p>Rechnen, Bombe entsch&auml;rfen, Simon sagt, Memory, Flaggen-Quiz oder einen Satz nachsprechen.</p>
-          </div>
-          <div class="tile reveal">
-            <h3>Zum Aufstehen</h3>
-            <p>Kniebeugen, Hampelm&auml;nner, Liegest&uuml;tze oder Tanzen. Die Kamera z&auml;hlt mit, ausgewertet wird
-              direkt auf deinem Handy.</p>
-          </div>
-          <div class="tile reveal">
-            <h3>Mit Beweisfoto</h3>
-            <p>Das gemachte Bett, der Himmel, ein Barcode, den du festgelegt hast, oder ein Ort, den du vorher
-              fotografiert hast.</p>
-          </div>
-        </div>
+        <div class="coin" style="--c: var(--yellow); top: 6%; right: 2%; transform: translateZ(80px)" aria-hidden="true"><b class="cf">1</b><b class="cb">1</b></div>
+        <div class="coin" style="--c: #d9dde6; --s: 4.2rem; bottom: 12%; left: 0; animation-delay: -1.6s, -1s; transform: translateZ(60px)" aria-hidden="true"><b class="cf">2</b><b class="cb">2</b></div>
+        <div class="coin" style="--c: #e0904a; --s: 3.6rem; bottom: 2%; right: 8%; animation-delay: -3.1s, -2s; transform: translateZ(40px)" aria-hidden="true"><b class="cf">3</b><b class="cb">3</b></div>
       </div>
-    </section>
-
-    <!-- 4 · Gegen deine Freunde. -->
-    <section class="panel panel--night" id="freunde">
-      <div class="inner split">
-        <div>
-          <h2 class="pop reveal"><span class="pop-sm">Gegen deine</span><span class="pop-lg">Freunde.</span></h2>
-          <ul class="ticks">
-            <li>F&uuml;g Freunde per Code, Link oder QR-Code hinzu.</li>
-            <li>Nach dem Aufstehen zeigt ihr euch ein Selfie und seht, wer schon wach ist.</li>
-            <li>Starte ein Turnier mit bis zu 9 Freunden, &uuml;ber 1, 2 oder 4 Wochen.</li>
-            <li>Wer zuerst wach ist, schickt den anderen eine Sprach- oder Videonachricht zum Klingeln &ndash; und
-              darf allen, die noch schlafen, eine Aufgabe zuteilen.</li>
-            <li>Am Ende warten Podest, Krone und Medaillen. Und die Revanche.</li>
-          </ul>
-        </div>
-        <div class="stage reveal">
-          <div class="burst" style="--burst: #ff3d8b" aria-hidden="true"><i></i></div>
-          <div class="phone" style="--tilt: 5deg">
-            <img src="img/app-turnier.webp" alt="Turnier „MTC Monats-Cup“ mit Podest: Adam vorn, Jen auf Platz 2, Bobby auf Platz 3" width="600" height="1304" loading="lazy" decoding="async" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5 · +20 fürs Aufstehen -->
-    <section class="panel panel--teal">
-      <div class="inner split split--flip">
-        <div>
-          <h2 class="pop pop--num reveal"><span class="pop-lg">+20</span><span class="pop-sm">f&uuml;rs Aufstehen.</span></h2>
-          <p class="lede">Wer rechtzeitig aus dem Bett kommt, sammelt Punkte und baut seine Streak aus. Jeder Morgen
-            z&auml;hlt &ndash; f&uuml;r dich und im Turnier.</p>
-        </div>
-        <div class="stage reveal">
-          <div class="burst" style="--burst: var(--k-orange)" aria-hidden="true"><i></i></div>
-          <div class="phone" style="--tilt: -5deg">
-            <img src="img/app-wach.webp" alt="Geschafft: „Wach!“, plus 20 Punkte, 7 Tage am St&uuml;ck" width="600" height="1304" loading="lazy" decoding="async" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6 · Stil, Pro, Geräte -->
-    <section class="panel" id="pro">
-      <div class="inner">
-        <h2 class="pop reveal" style="--p-ex: var(--points)"><span class="pop-sm">Dein Wecker,</span><span class="pop-lg" style="color: var(--accent)">dein Stil.</span></h2>
-        <div class="tiles tiles--two">
-          <div class="tile reveal">
-            <h3>Laut, lauter, Schrei-Ziege</h3>
-            <p>&Uuml;ber 40 Weckt&ouml;ne, von klassisch bis laut. Dazu Meme-Videos, die beim Klingeln laufen:
-              Schrei-Ziege, Hamster-Rave, Klassik-Katze. Au&szlig;erdem Power-Nap und eine Erinnerung, wann es Zeit
-              f&uuml;rs Bett ist.</p>
-          </div>
-          <div class="tile reveal">
-            <h3>Get Up Pro</h3>
-            <p>Ohne Pro gibt es den Rechenwecker. Get Up Pro schaltet alle 31 Aufgaben, Zufall, Freunde und Turniere
-              frei &ndash; als Monatsabo, Jahresabo (f&uuml;r Neukunden mit Gratis-Test) oder Einmalkauf ohne Abo.</p>
-          </div>
-          <div class="tile reveal">
-            <h3>iPhone</h3>
-            <p>Ab iOS&nbsp;26. Klingelt &uuml;ber dem Sperrbildschirm und in der Dynamic Island, auch im
-              Lautlos-Modus. Anmelden mit Apple, Google oder E-Mail.</p>
-          </div>
-          <div class="tile reveal">
-            <h3>Android</h3>
-            <p>Ab Android&nbsp;8. Klingelt als Vollbild &uuml;ber dem Sperrbildschirm, auch nach einem Neustart.
-              Anmelden mit Google oder E-Mail. Freunde und Turniere laufen &uuml;ber beide Systeme hinweg.</p>
-          </div>
-        </div>
-
-        <h2 class="pop reveal" style="--p-ex: var(--points); margin-top: 84px;"><span class="pop-sm">Deine Daten,</span><span class="pop-lg" style="color: var(--accent)">deine Sache.</span></h2>
-        <div class="promise">
-          <p class="reveal"><strong>Ohne Konto bleibt alles auf deinem Handy.</strong> Wecker, Punkte und Verlauf werden
-            nirgendwohin &uuml;bertragen. Ein Konto brauchst du nur f&uuml;r Freunde, Turniere und Pro auf mehreren
-            Ger&auml;ten.</p>
-          <p class="reveal"><strong>Gespeichert in der EU.</strong> Ergebnisse und Selfies liegen in Frankfurt am Main
-            (Google Firebase, Region europe-west3). Einzelne Morgen werden nach 62 Tagen gel&ouml;scht.</p>
-          <p class="reveal"><strong>Keine Werbung in der App.</strong> Nutzungsstatistik und Werbe-Messung (Meta) laufen
-            nur, wenn du zustimmst, und lassen sich in den Einstellungen jederzeit abschalten.</p>
-          <p class="reveal"><strong>Jederzeit l&ouml;schbar.</strong> Dein Konto l&ouml;schst du in der App unter
-            Einstellungen &rarr; Konto l&ouml;schen &ndash; oder ohne App per E-Mail.
-            So geht&rsquo;s: <a href="delete.html">Konto l&ouml;schen</a>.</p>
-        </div>
-        <p>Die Einzelheiten stehen in der <a href="privacy.html">Datenschutzerkl&auml;rung</a>.</p>
-      </div>
-    </section>
-
-    <!-- Hinweis aufs Creator-Programm, Text aus dem Creator-Playbook -->
-    <section class="panel panel--yellow creator-teaser final">
-      <div class="inner">
-        <p class="kicker">Creator-Programm &middot; Deutschland</p>
-        <h2 class="pop pop--center reveal"><span class="pop-sm">Du drehst gern?</span><span class="pop-lg">Werde Creator.</span></h2>
-        <p class="lede">Dreh Videos f&uuml;r den Wecker, der erst Ruhe gibt, wenn man wirklich wach ist &ndash; und verdien an
-          jedem Video mit.</p>
-        <p style="margin: 28px 0 0;"><a class="btn" href="partner.html">Zum Creator-Programm</a></p>
-      </div>
-    </section>
-
-    <!-- 7 · Laden -->
-    <section class="panel panel--cherry final" id="laden">
-      <div class="inner">
-        <p class="lockup reveal">GET <span class="hl">UP!</span></p>
-        <p class="lede">Kein Snooze. Keine Ausreden. Morgen fr&uuml;h geht&rsquo;s los.</p>
-        <div class="stores stores--center">
-          <a class="badge badge--ios" href="https://apps.apple.com/de/app/id6818147917"><img src="img/badge-app-store-de.svg" alt="Laden im App Store" width="168" height="56" /></a>
-          <a class="badge badge--play" href="https://play.google.com/store/apps/details?id=com.jenpreisser.gtfoob"><img src="img/badge-google-play-de.png" alt="Jetzt bei Google Play" width="188" height="56" /></a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-foot">
-    <div class="inner">
-      <nav aria-label="Rechtliches und Kontakt">
-        <a href="privacy.html">Datenschutz</a>
-        <a href="delete.html">Konto l&ouml;schen</a>
-        <a href="impressum.html">Impressum</a>
-        <a href="partner.html">Creator werden</a>
-        <a href="mailto:support@getup-alarm.de">support@getup-alarm.de</a>
-      </nav>
-      <p>&copy; 2026 Jen Eric Prei&szlig;er &middot;
-        <a href="https://chasingdreamsinteractive.com/">Ein Projekt von Chasing Dreams Interactive</a></p>
-      <p class="marks">Apple und das Apple-Logo sind Marken der Apple Inc. App Store ist eine Dienstleistungsmarke der
-        Apple Inc. Google Play und das Google Play-Logo sind Marken von Google LLC.</p>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    (function () {
-      var els = document.querySelectorAll('.reveal');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function (el) { el.classList.add('in'); });
-        return;
-      }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-      els.forEach(function (el) { io.observe(el); });
-    })();
-  </script>
+  <!-- 5 · Geniale Klingeltöne -->
+  <section class="panel teal" id="klingeltoene">
+    <div class="inner gutter split flip">
+      <div>
+        <h2 class="pop"><span class="sm">Geniale</span><span class="lg">Klingeltöne.</span></h2>
+        <p class="lede">Über 40 Wecktöne, von klassisch bis laut. Dazu Meme-Videos, die beim Klingeln laufen: Schrei-Ziege, Hamster-Rave, Klassik-Katze. Außerdem Power-Nap und eine Erinnerung, wann es Zeit fürs Bett ist.</p>
+        <p class="speech">Hamster-Rave, Schrei-Ziege &amp; 40 mehr</p>
+      </div>
+      <div class="stage">
+        <div class="rays" aria-hidden="true"></div>
+        <div class="dev" style="--ry: 14deg; --rz: -3deg">
+          <div class="face"><img src="img/app-hamster.webp" alt="Weckvideo Hamster-Rave: ein Pixel-Hamster im Laufrad, darunter „Aufgabe starten“" width="600" height="1304" loading="lazy"></div>
+        </div>
+        <div class="notes" aria-hidden="true">
+          <span class="mnote" style="left: 2%; top: 12%; --c: var(--yellow)">♪</span>
+          <span class="mnote" style="right: 0; top: 30%; --fs: 5rem; --dl: -1.2s">♫</span>
+          <span class="mnote" style="left: 6%; bottom: 10%; --fs: 3.4rem; --c: var(--pink); --dl: -2.6s">♪</span>
+          <span class="mnote" style="right: 10%; bottom: 4%; --fs: 3rem; --c: var(--yellow); --dl: -3.4s">♬</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · +20 fürs Aufstehen -->
+  <section class="panel pinky">
+    <div class="inner gutter split">
+      <div>
+        <h2 class="pop"><span class="lg" style="font-size: clamp(5.2rem, 18vw, 9.5rem)">+20</span><span class="sm" style="color: var(--cherry)">fürs Aufstehen.</span></h2>
+        <p class="lede">Wer rechtzeitig aus dem Bett kommt, sammelt Punkte und baut seine Streak aus. Jeder Morgen zählt, für dich und im Turnier.</p>
+      </div>
+      <div class="stage">
+        <div class="burst" style="--burst: var(--orange)" aria-hidden="true"><i></i></div>
+        <div class="dev" style="--ry: -12deg; --rz: -5deg">
+          <div class="face"><img src="img/app-wach.webp" alt="Geschafft: „Wach!“, plus 20 Punkte, 7 Tage am Stück" width="600" height="1304" loading="lazy"></div>
+        </div>
+        <div class="coin" style="--c: var(--yellow); --s: 6rem; top: 4%; left: 0" aria-hidden="true"><b class="cf" style="font-size: 2rem">+20</b><b class="cb" style="font-size: 2rem">+20</b></div>
+        <div class="coin" style="--c: var(--yellow); --s: 4rem; bottom: 8%; right: 2%; animation-delay: -2.4s, -1.3s" aria-hidden="true"><b class="cf">★</b><b class="cb">★</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · Stil, Pro, Geräte, Daten -->
+  <section class="panel paper" id="pro">
+    <div class="inner gutter">
+      <h2 class="pop"><span class="sm">Dein Wecker,</span><span class="lg">dein Stil.</span></h2>
+      <div class="tiles tiles--two">
+        <div class="card3 rv"><h3>Get Up Pro</h3><p>Ohne Pro gibt es den Rechenwecker. Get Up Pro schaltet alle 31 Aufgaben, Zufall, Freunde und Turniere frei, als Monatsabo, Jahresabo (für Neukunden mit Gratis-Test) oder Einmalkauf ohne Abo.</p></div>
+        <div class="card3 rv"><h3>Power-Nap und Schlafenszeit</h3><p>Ein kurzer Nap mit Wecker und eine Erinnerung, wann es Zeit fürs Bett ist. Damit der nächste Morgen leichter wird.</p></div>
+        <div class="card3 rv"><h3>iPhone</h3><p>Ab iOS 26. Klingelt über dem Sperrbildschirm und in der Dynamic Island, auch im Lautlos-Modus. Anmelden mit Apple, Google oder E-Mail.</p></div>
+        <div class="card3 rv"><h3>Android</h3><p>Ab Android 8. Klingelt als Vollbild über dem Sperrbildschirm, auch nach einem Neustart. Anmelden mit Google oder E-Mail. Freunde und Turniere laufen über beide Systeme hinweg.</p></div>
+      </div>
+
+      <h2 class="pop" style="margin-top: 84px"><span class="sm">Deine Daten,</span><span class="lg">deine Sache.</span></h2>
+      <div class="promise">
+        <p><strong>Ohne Konto bleibt alles auf deinem Handy.</strong> Wecker, Punkte und Verlauf werden nirgendwohin übertragen. Ein Konto brauchst du nur für Freunde, Turniere und Pro auf mehreren Geräten.</p>
+        <p><strong>Gespeichert in der EU.</strong> Ergebnisse und Selfies liegen in Frankfurt am Main (Google Firebase, Region europe-west3). Einzelne Morgen werden nach 62 Tagen gelöscht.</p>
+        <p><strong>Keine Werbung in der App.</strong> Nutzungsstatistik und Werbe-Messung (Meta) laufen nur, wenn du zustimmst, und lassen sich in den Einstellungen jederzeit abschalten.</p>
+        <p><strong>Jederzeit löschbar.</strong> Dein Konto löschst du in der App unter Einstellungen → Konto löschen, oder ohne App per E-Mail. So geht’s: <a href="delete.html">Konto löschen</a>.</p>
+      </div>
+      <p style="margin: 22px 0 0">Die Einzelheiten stehen in der <a href="privacy.html">Datenschutzerklärung</a>.</p>
+    </div>
+  </section>
+
+  <!-- Creator-Hinweis -->
+  <section class="panel yellow final" id="creator">
+    <div class="inner gutter">
+      <p class="kicker">Creator-Programm · Deutschland</p>
+      <h2 class="pop pop--center"><span class="sm">Du drehst gern?</span><span class="lg">Werde Creator.</span></h2>
+      <p class="lede">Dreh Videos für den Wecker, der erst Ruhe gibt, wenn man wirklich wach ist, und verdien an jedem Video mit.</p>
+      <p style="margin: 30px 0 0"><a class="btn" href="partner.html">Zum Creator-Programm</a></p>
+    </div>
+  </section>
+
+  <!-- Laden -->
+  <section class="panel cherry final" id="laden">
+    <div class="inner gutter">
+      <p class="lockup">GET <span class="hl">UP!</span></p>
+      <p class="lede">Kein Snooze. Keine Ausreden. Morgen früh geht’s los.</p>
+      <div class="stores stores--center">
+        <a class="badge badge--ios" href="https://apps.apple.com/de/app/id6818147917"><img src="img/badge-app-store-de.svg" alt="Laden im App Store" width="168" height="56"></a>
+        <a class="badge badge--play" href="https://play.google.com/store/apps/details?id=com.jenpreisser.gtfoob"><img src="img/badge-google-play-de.png" alt="Jetzt bei Google Play" width="188" height="56"></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="inner gutter">
+    <nav aria-label="Rechtliches und Kontakt">
+      <a href="privacy.html">Datenschutz</a>
+      <a href="delete.html">Konto löschen</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="partner.html">Creator werden</a>
+      <a href="mailto:support@getup-alarm.de">support@getup-alarm.de</a>
+    </nav>
+    <p>© 2026 Jen Eric Preißer · <a href="https://chasingdreamsinteractive.com/">Ein Projekt von Chasing Dreams Interactive</a></p>
+    <p class="marks">Apple und das Apple-Logo sind Marken der Apple Inc. App Store ist eine Dienstleistungsmarke der Apple Inc. Google Play und das Google Play-Logo sind Marken von Google LLC.</p>
+  </div>
+</footer>
 </body>
 </html>
