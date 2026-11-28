@@ -22,6 +22,11 @@ Ausgeliefert über GitHub Pages aus `main`, Domain über die Datei `CNAME`.
 - `join.html` reicht dem Banner „In der App öffnen“ deshalb noch die alte Adresse weiter.
 - Die Bilder in `img/` stammen aus `docs/store/raw/` im App-Repo, `og.jpg` aus dem Store-Panorama.
 
+## Browser-Cache
+
+`3d.css`, `js/3d.js` und `js/clock.js` werden in `index.html` und `partner.html` mit `?v=DATUM` eingebunden. Wer eine
+der Dateien ändert, setzt das Datum in beiden Seiten neu, sonst zeigen Browser noch stundenlang den alten Stand.
+
 ## Lokal ansehen
 
 ```bash
