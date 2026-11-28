@@ -189,7 +189,7 @@ header.bar .inner { max-width: 72rem; margin: 0 auto; padding-block: 11px; displ
 }
 .card3:hover { box-shadow: 10px 12px 0 var(--ink); }
 .card3 > * { transform: translateZ(26px); }
-.steps3 li { counter-increment: step; }
+.steps3 li { counter-increment: step; padding-top: 48px; }
 .steps3 li:nth-child(odd) { --rot: -1deg; } .steps3 li:nth-child(even) { --rot: 1deg; }
 .steps3 li::before {
   content: counter(step); position: absolute; top: -24px; left: 18px; transform: translateZ(40px);
@@ -213,25 +213,18 @@ header.bar .inner { max-width: 72rem; margin: 0 auto; padding-block: 11px; displ
 .chips li:nth-child(3n+2) { background: var(--yellow); transform: rotate(1.5deg); }
 .chips li:nth-child(4n) { background: var(--cherry); color: var(--cream); }
 
-/* ---------- Aufgaben-Karussell ---------- */
-.carousel { position: relative; height: 34rem; perspective: 1300px; perspective-origin: 50% 38%; touch-action: pan-y; cursor: grab; margin-top: 10px; }
-.carousel:active { cursor: grabbing; }
-.carousel .floor {
-  position: absolute; left: 50%; top: 74%; width: 46rem; max-width: 140%; aspect-ratio: 1; border-radius: 50%;
-  translate: -50% -50%; transform: rotateX(78deg);
-  background: radial-gradient(circle, rgba(27, 20, 32, .28) 0 1.6px, transparent 2px) 0 0 / 18px 18px, var(--yellow);
-  border: 5px solid var(--ink); box-shadow: 0 14px 0 var(--ink);
+/* ---------- Aufgaben-Auswahl: ein Handy zeigt die gewählte Aufgabe ---------- */
+.picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 26px 0 0; max-width: 30rem; }
+.pick {
+  font-family: var(--font-display); font-size: 1.05rem; letter-spacing: .03em; line-height: 1.05; text-align: left;
+  padding: 13px 14px 9px; border: 3px solid var(--ink); border-radius: 14px; background: var(--cream); color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink); cursor: pointer; transition: transform .1s, box-shadow .1s, background .15s;
 }
-.ring { position: absolute; left: 50%; top: 6%; width: 0; height: 0; transform-style: preserve-3d; transform: translateZ(calc(var(--R) * -1)) rotateY(var(--a, 0deg)); --R: 21rem; }
-.slot { position: absolute; transform-style: preserve-3d; transform: rotateY(calc(var(--k) * 60deg)) translateZ(var(--R)); }
-.slot .dev { --w: 12.5rem; --ry: 0deg; --rx: 0deg; --rz: 0deg; --r: 2rem; margin-left: calc(var(--w) / -2); width: var(--w); transform: none; }
-.slot .label {
-  position: absolute; left: 50%; top: calc(12.5rem * 1304 / 600 + 14px); translate: -50% 0; white-space: nowrap;
-  font-family: var(--font-display); font-size: 1rem; letter-spacing: .04em; line-height: 1;
-  background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; padding: 8px 13px 5px; box-shadow: 3px 3px 0 var(--ink);
-  backface-visibility: hidden; transform: translateZ(2px);
-}
-.drag { text-align: center; font-family: var(--font-mono); font-weight: 700; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; margin: 0; }
+.pick:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); background: var(--yellow); }
+.pick.on { background: var(--cherry); color: var(--cream); transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.more { margin: 16px 0 0; font-weight: 500; font-size: .98rem; max-width: 30rem; }
+.dev.swap { animation: swap .5s cubic-bezier(.3, .8, .3, 1.15); }
+@keyframes swap { 0% { scale: 1; } 40% { scale: .86 1.04; opacity: .2; } 100% { scale: 1; opacity: 1; } }
 
 /* ---------- Medaillen und Münzen (3D-Scheiben) ---------- */
 .coin {
@@ -321,11 +314,6 @@ header.bar .inner { max-width: 72rem; margin: 0 auto; padding-block: 11px; displ
 @media (max-width: 859px) {
   .stage { max-width: 25rem; margin: 0 auto; width: 100%; }
   .hero .stage { min-height: 24rem; }
-  .carousel { height: 27rem; }
-  .ring { --R: 13.5rem; top: 4%; }
-  .slot .dev { --w: 9rem; --r: 1.5rem; }
-  .slot .label { top: calc(9rem * 1304 / 600 + 10px); font-size: .85rem; }
-  .carousel .floor { top: 76%; }
 }
 @media (max-width: 560px) {
   .panel > .inner { padding-block: 64px; }
@@ -336,7 +324,7 @@ header.bar .inner { max-width: 72rem; margin: 0 auto; padding-block: 11px; displ
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .burst i, .dev--ring, .ticker .track, .rays, .coin, .mnote, .pop .ch { animation: none !important; }
+  .burst i, .dev--ring, .dev.swap, .ticker .track, .rays, .coin, .mnote, .pop .ch { animation: none !important; }
   .js .rv:not(.in) { transform: none; }
 }
 
