@@ -11,7 +11,9 @@ Ausgeliefert über GitHub Pages aus `main`, Domain über die Datei `CNAME`.
 | `join.html` | Einladungslink (`/join.html#CODE`), öffnet die App oder zeigt den Code |
 | `404.html` | Seite für unbekannte Adressen |
 | `.well-known/` | App-Verknüpfung für iOS (`apple-app-site-association`) und Android (`assetlinks.json`) |
-| `app.css` | Design „Retro-Pop“ wie in der App; Werte aus `GetUp/Design/Theme.swift` im App-Repo |
+| `app.css` | Design „Retro-Pop“ für Rechtsseiten, `join.html` und `404.html` wie in der App; Werte aus `GetUp/Design/Theme.swift` im App-Repo |
+| `3d.css`, `js/3d.js`, `js/clock.js` | Startseite und Creator-Seite in 3D (seit 28.11.2026): 3D-Handys, Aufgaben-Karussell, Stufen-Treppe, cel-shaded 3D-Wecker im Kopf |
+| `js/three.min.js` | three.js r128 (MIT), selbst gehostet statt CDN, damit keine Daten an Dritte gehen; nur für den 3D-Wecker |
 
 ## Stand
 
